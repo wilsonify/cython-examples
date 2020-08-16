@@ -35,16 +35,14 @@ paths:
 	@echo "LIBS=$(LIBS)"
 	@echo "SYSLIBS=$(SYSLIBS)"
 
-$(MODULE).out: $(MODULE)/__main__.o
+$(MODULE).out: $(MODULE).o
 	$(LINKCC) -o $@ $^ -L$(LIBDIR1) -L$(LIBDIR2) -l$(PYLIB) $(LIBS) $(SYSLIBS) $(LINKFORSHARED)
 
-$(MODULE)/__main__.o: $(MODULE)/__main__.c
+$(MODULE).o: $(MODULE).c
 	$(CC) -c $^ -I$(INCDIR) -I$(PLATINCDIR) -o $@
 
-
-$(MODULE)/__main__.c: $(MODULE)/__main__.py
-	@$(PYTHON) setup.py build_ext
-	@$(PYTHON) setup.py install
+$(MODULE).c: $(MODULE).py
+	@$(PYTHON) setup.py build_ext --inplace
 	@$(PYTHON) -m $(CYTHON) -3 --embed $^
 
 all: $(MODULE).out
@@ -59,9 +57,6 @@ clean:
 	@echo Cleaning .so files
 	@rm -rf **/*.so
 	@rm -rf *.so
-	@echo Cleaning .html files
-	@rm -rf **/*.html
-	@rm -rf *.html
 	@echo Cleaning .c files
 	@rm -rf **/*.c
 	@rm -rf *.c
