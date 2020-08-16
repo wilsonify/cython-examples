@@ -63,4 +63,4 @@ def spectral_norm(n):
 if __name__ == "__main__":
     n = int(sys.argv[1])
     spec_norm = spectral_norm(n) 
-    print("%0.9f" % spec_norm)
+    print(("%0.9f" % spec_norm))
