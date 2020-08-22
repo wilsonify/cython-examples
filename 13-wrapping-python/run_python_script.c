@@ -14,7 +14,7 @@ main(int argc, char *argv[])
     PyRun_SimpleString("from time import time,ctime\n"
                        "print('Today is', ctime(time()))\n");
 
-    FILE *file = _Py_fopen("arbitrary.py", "r+");
+    FILE *file = _Py_fopen("arbitrary_package/arbitrary.py", "r+");
     PyRun_SimpleFile(file, "arbitrary.py");
 
     if (Py_FinalizeEx() < 0) {
