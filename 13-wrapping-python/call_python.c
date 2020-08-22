@@ -3,21 +3,21 @@
 
 int main(void)
 {
-    setenv("PYTHONPATH", ".", 1); // Set PYTHONPATH TO working directory
-    PyObject *pName, *pModule, *pFunc;
-    PyObject *pArgs, *pValue;
+    PyObject *pName;
+    PyObject *pModule;
+    PyObject *pFunc;
+    PyObject *pArgs;
+    PyObject *pValue;
     int i;
 
     Py_Initialize();
-    pName = PyUnicode_DecodeFSDefault("arbitrary");
-
+    pName = PyUnicode_DecodeFSDefault("arbitrary_package.arbitrary");
     pModule = PyImport_Import(pName);
     Py_DECREF(pName);
 
     if (pModule != NULL)
     {
-        pFunc = PyObject_GetAttrString(pModule, "multiply"); /* pFunc is a new reference */
-
+        pFunc = PyObject_GetAttrString(pModule, "multiply");
         if (pFunc && PyCallable_Check(pFunc))
         {
             pArgs = PyTuple_New(2);
